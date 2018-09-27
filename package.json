@@ -1,0 +1,62 @@
+{
+  "name": "discord-vc-count-bot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "build": "webpack",
+    "build_run": "webpack && node dist/bundle.js -k xxx",
+    "run_only": "node dist/bundle.js -k xxx",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infra-workshop/discord-vc-count-bot.git"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "sonarqube",
+    "gitlab",
+    "webpack"
+  ],
+  "author": "kazuhito_m",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/infra-workshop/discord-vc-count-bot/issues"
+  },
+  "homepage": "https://github.com/infra-workshop/discord-vc-count-bot#readme",
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/jest": "^23.3.3",
+    "@types/node": "^10.11.4",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "source-map-support": "^0.5.9",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.2.1",
+    "typescript": "^3.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "commander": "^2.18.0",
+    "discord.js": "^11.4.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "**/test/**/*.ts"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ]
+  }
+}
