@@ -16,8 +16,6 @@
   "keywords": [
     "node",
     "typescript",
-    "sonarqube",
-    "gitlab",
     "webpack"
   ],
   "author": "kazuhito_m",
