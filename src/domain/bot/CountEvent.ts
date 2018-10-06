@@ -1,5 +1,5 @@
-import { Client, Channel } from 'discord.io';
-import ChannelMember from './ChannelMember';
+import { Client } from 'discord.io';
+import ChannelWrapper from '../channel/ChannelWrapper';
 
 export default class CountEvent {
   private readonly discordClient: Client;
@@ -20,27 +20,15 @@ export default class CountEvent {
   private createMessageOfCount(currentUserId: string , currentUserName: string): string {
     const currentVc = this.currentChanelOf(currentUserId);
     if (!currentVc) return `${currentUserName} さんはVC未参加です。VC参加後コマンドを実行下さい。`;
-    const count = this.memmbersOf(currentVc).length;
+    const count = currentVc.members().length;
     return `${currentUserName} さんが参加中のVC "${currentVc.name}" の接続人数 : ${count}`;
   }
 
-  private currentChanelOf(currentUserId: string): Channel | undefined {
-    const allCannels = Object.values(this.discordClient.channels);
-    const vcOnly = allCannels.filter(channel => this.isVc(channel));
-    const currentVcs = vcOnly.filter(vc => this.hasMember(vc, currentUserId));
+  private currentChanelOf(currentUserId: string): ChannelWrapper | undefined {
+    const allCannels = Object.values(this.discordClient.channels)
+      .map(channel => new ChannelWrapper(channel));
+    const vcOnly = allCannels.filter(channel => channel.isVc());
+    const currentVcs = vcOnly.filter(vc => vc.hasMember(currentUserId));
     return currentVcs.length === 0 ? undefined : currentVcs[0];
-  }
-
-  private hasMember(channel: Channel, currentUserId: string): boolean {
-    const members = this.memmbersOf(channel);
-    return members.filter(member => member.user_id === currentUserId).length > 0;
-  }
-
-  private memmbersOf(channel: Channel): ChannelMember[] {
-    return Object.values(channel.members);
-  }
-
-  private isVc(channel: Channel): boolean {
-    return parseInt(channel.type) === 2;
   }
 }
