@@ -21,4 +21,8 @@ export default class ChannelWrapper {
       .filter(member => member.user_id === userId)
       .length > 0;
   }
+
+  public get name() : string {
+    return this.source.name;
+  }
 }
