@@ -10,14 +10,14 @@ export default class CountEvent {
 
   public onEvent(user: string, userID: string, channelID: string, message: string, event: any) {
     if (!message.startsWith('/count')) return;
-    const consoleMessage = this.createMessageOfCount(userID, user);
+    const consoleMessage = this.messageOfCount(userID, user);
     this.discordClient.sendMessage({
       to: channelID,
       message: consoleMessage
     });
   }
 
-  private createMessageOfCount(currentUserId: string , currentUserName: string): string {
+  private messageOfCount(currentUserId: string , currentUserName: string): string {
     const currentVc = this.currentChanelOf(currentUserId);
     if (!currentVc) return `${currentUserName} さんはVC未参加です。VC参加後コマンドを実行下さい。`;
     const count = currentVc.members().length;
