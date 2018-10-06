@@ -1,5 +1,4 @@
 import ConsoleApplication from "./ConsoleApplication";
-process.on('unhandledRejection', console.dir);
 
 // Support source map.
 require('source-map-support').install()

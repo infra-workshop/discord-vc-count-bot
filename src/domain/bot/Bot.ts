@@ -1,4 +1,4 @@
-import { Client } from 'discord.js';
+import { Client } from 'discord.io';
 import CountEvent from './CountEvent';
 
 export default class Bot {
@@ -10,7 +10,9 @@ export default class Bot {
 
   public run() {
     const client = this.discordClient;
-    const countEvent = new CountEvent();
-    client.on('ready', () => client.on('message', countEvent.onEvent));
+    const countEvent = new CountEvent(this.discordClient);
+    client.on('ready', () => client.on('message',
+      (user, userID, channelID, message, event) => countEvent.onEvent(user, userID, channelID, message, event)
+    ));
   }
 }
