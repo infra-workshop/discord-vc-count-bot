@@ -18,17 +18,17 @@ export default class CountEvent {
   }
 
   private messageOfCount(currentUserId: string , currentUserName: string): string {
-    const currentVc = this.currentChanelOf(currentUserId);
+    const currentVc = this.voiceChannelOf(currentUserId);
     if (!currentVc) return `${currentUserName} さんはVC未参加です。VC参加後コマンドを実行下さい。`;
     const count = currentVc.members().length;
     return `${currentUserName} さんが参加中のVC "${currentVc.name}" の接続人数 : ${count}`;
   }
 
-  private currentChanelOf(currentUserId: string): ChannelWrapper | undefined {
+  private voiceChannelOf(userId: string): ChannelWrapper | undefined {
     const allCannels = Object.values(this.discordClient.channels)
       .map(channel => new ChannelWrapper(channel));
-    const vcOnly = allCannels.filter(channel => channel.isVc());
-    const currentVcs = vcOnly.filter(vc => vc.hasMember(currentUserId));
-    return currentVcs.length === 0 ? undefined : currentVcs[0];
+    const vcsOnly = allCannels.filter(channel => channel.isVc());
+    const liveVcs = vcsOnly.filter(vc => vc.hasMember(userId));
+    return liveVcs.length === 0 ? undefined : liveVcs[0];
   }
 }
