@@ -14,7 +14,37 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      # run tests!
       - run: npm test
       - store_artifacts:
           path: coverage
+  make-tag:
+    docker:
+      - image: circleci/node:10.11-stretch
+    working_directory: ~/repo2
+    steps:
+      - checkout
+      - run:
+        name: Initialize git command settings.
+        commnad: |
+          echo "machine github.com\nlogin ${CIRCLE_PROJECT_USERNAME}\npassword ${GITHUB_ACCESS_TOKEN}" > ~/.netrc
+          git config user.email "some-bot@users.noreply.github.com"
+          git config user.name "CircleCI"
+      - run:
+        name: Version incriment patch.
+        command: npm version patch -m 'version auto incliment. [skip ci]
+      - run:
+        name: お試し
+        command: |
+          cat ~/.netrc
+          git pull
+workflows:
+  version: 2
+  build_and_version_up:
+    jobs:
+      - build
+      - make-tag:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
