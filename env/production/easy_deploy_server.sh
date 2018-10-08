@@ -24,5 +24,5 @@ while true ; do
   image_name=` jq -r '.repository.repo_name' ${webhook_data_json_file}`
   version=` jq -r '.push_data.tag' ${webhook_data_json_file}`
   docker rm -f ${DOCKER_CONTAINER_NAME}
-  docker run -d --name ${DOCKER_CONTAINER_NAME} -e DISCORD_APP_KEY=${DISCORD_APP_KEY} -d ${image_name}:${version}
+  docker run -d --name ${DOCKER_CONTAINER_NAME} -e DISCORD_APP_KEY=${DISCORD_APP_KEY} -t ${image_name}:${version}
 done
