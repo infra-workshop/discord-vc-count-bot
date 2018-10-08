@@ -31,7 +31,7 @@ jobs:
             git config user.name "CircleCI"
       - run:
           name: Version incriment patch.
-          command: npm version patch -m 'version auto incliment. [skip ci]
+          command: npm version patch -m 'version auto incliment. [skip ci]'
       - run:
           name: お試し
           command: |
