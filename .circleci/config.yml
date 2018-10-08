@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Initialize git command settings.
           command: |
-            echo "machine github.com\nlogin ${CIRCLE_PROJECT_USERNAME}\npassword ${GITHUB_ACCESS_TOKEN}" > ~/.netrc
+            echo -e "machine github.com\nlogin ${CIRCLE_PROJECT_USERNAME}\npassword ${GITHUB_ACCESS_TOKEN}" > ~/.netrc
             git config user.email "some-bot@users.noreply.github.com"
             git config user.name "CircleCI"
       - run:
